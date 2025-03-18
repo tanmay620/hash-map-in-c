@@ -10,8 +10,6 @@ typedef struct {
 } HashEntry;
 
 HashEntry hashTable[TABLE_SIZE];
-
-// Hash function
 unsigned int hashFunction(const char* key) {
     unsigned int hash = 0;
     while (*key)
@@ -19,17 +17,16 @@ unsigned int hashFunction(const char* key) {
     return hash % TABLE_SIZE;
 }
 
-// Insert key-value pair
 void insert(const char* key, int value) {
     unsigned int index = hashFunction(key);
-    while (strlen(hashTable[index].key) != 0) { // Find an empty slot
-        index = (index + 1) % TABLE_SIZE; // Linear probing
+    while (strlen(hashTable[index].key) != 0) {
+        index = (index + 1) % TABLE_SIZE;//linear probing
     }
     strcpy(hashTable[index].key, key);
     hashTable[index].value = value;
 }
 
-// Search for a key
+
 int search(const char* key) {
     unsigned int index = hashFunction(key);
     int startIndex = index;
@@ -37,13 +34,12 @@ int search(const char* key) {
     while (strlen(hashTable[index].key) != 0) {
         if (strcmp(hashTable[index].key, key) == 0)
             return hashTable[index].value;
-        index = (index + 1) % TABLE_SIZE; // Linear probing
-        if (index == startIndex) break; // Full loop, key not found
+        index = (index + 1) % TABLE_SIZE;
+        if (index == startIndex) break;
     }
     return -1;
 }
 
-// Display the hash table
 void display() {
     for (int i = 0; i < TABLE_SIZE; i++) {
         if (strlen(hashTable[i].key) != 0)
@@ -53,14 +49,13 @@ void display() {
     }
 }
 
-// Main function
 int main() {
-    insert("Alice", 25);
-    insert("Bob", 30);
-    insert("Charlie", 35);
+    insert("TUser1", 25);
+    insert("User2", 90);
+    insert("charli", 35);
 
-    printf("Value for 'Alice': %d\n", search("Alice"));
-    printf("Value for 'Bob': %d\n", search("Bob"));
+    printf("Value for 'User2': %d\n", search("User2"));
+    printf("Value for 'charli': %d\n", search("charli"));
 
     display();
 
